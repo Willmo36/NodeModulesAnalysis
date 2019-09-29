@@ -4,17 +4,13 @@
   "main": "build/bin.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^24.0.14",
-    "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
     "typescript": "^3.5.1"
   },
   "dependencies": {
     "@types/node": "^12.7.8",
-    "@types/prettier": "^1.16.4",
     "arg": "^4.1.0",
-    "fp-ts": "2.x.x",
-    "set-value": "^2.0.1"
+    "fp-ts": "2.x.x"
   },
   "scripts": {
     "build": "tsc",
