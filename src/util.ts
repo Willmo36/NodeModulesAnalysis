@@ -12,7 +12,6 @@ import {
   taskify
 } from "fp-ts/lib/TaskEither";
 import * as fs from "fs";
-import { format } from "prettier";
 
 export type PackageJSON = Record<string, string>;
 
@@ -35,15 +34,7 @@ export const mkDirSafe = (path: string) =>
 export const tryParseJSON = (s: string) =>
   tryCatch<Error, PackageJSON>(() => JSON.parse(s), err => err as Error);
 export const tryJSONStringify = (o: unknown) =>
-  tryCatch(() => JSON.stringify(o), err => err as Error);
-
-export const writeJSON = (filepath: string, o: unknown) =>
-  pipe(
-    fromEither(tryJSONStringify(o)),
-    map(str => format(str, { parser: "json", printWidth: 40 })),
-    chain(json => writeFile(filepath + ".json", json)),
-    map(() => filepath)
-  );
+  tryCatch(() => JSON.stringify(o, null, 4), err => err as Error);
 
 export const combineTasks = array.sequence(taskEither);
 export const concurrently = sequenceT(taskEither);

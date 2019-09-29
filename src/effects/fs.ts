@@ -2,7 +2,6 @@ import { URIS2, Kind2 } from "fp-ts/lib/HKT";
 import { taskify, taskEither, chain, fromEither, map } from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/pipeable";
 import * as fs from "fs";
-import { format } from "prettier";
 import { tryJSONStringify } from "../util";
 
 export type PackageJSON = Record<string, string>;
@@ -35,8 +34,7 @@ const mkDirSafe = (path: string) =>
 export const writeJSON = (filepath: string, o: unknown) =>
 pipe(
   fromEither(tryJSONStringify(o)),
-  map(str => format(str, { parser: "json", printWidth: 40 })),
-  chain(json => writeFile(filepath + ".json", json)),
+  chain(json => writeFile(filepath + ".json", unescape(json))),
   map(() => filepath)
 );
 
